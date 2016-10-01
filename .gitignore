@@ -1,0 +1,6 @@
+# ignore image files,
+*.png
+
+# Ignore dropbox files
+.dropbox
+*.class
