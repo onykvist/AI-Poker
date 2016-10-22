@@ -17,6 +17,8 @@ public class poker_joko {
 			playerCash[i] = 100;
 		}
 		
+		//hej Olle
+		
 		int smallBlind = 1;//getInput("Set small blind: ");
 		int bigBlind = 2;//getInput("Set big blind: ");
 		
