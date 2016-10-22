@@ -1,5 +1,6 @@
 package poker_joko;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,6 +13,13 @@ public class Game {
 	int maxStake;
 	Deck deck;
 	
+	int PRE_FLOP = 1;
+	int FLOP 	 = 2;
+	int TURN 	 = 3;
+	int RIVER	 = 4;
+	int gamePhase = 0;
+	
+	List<Integer> cardsOnTable = new ArrayList<Integer>();
 	
 	public Game(int nrPlayers, int[] playerCash, int smallBlind_, int bigBlind_) {
 		smallBlind = smallBlind_;
@@ -35,24 +43,37 @@ public class Game {
 		players[0].bet(smallBlind);
 		players[1].bet(bigBlind);
 		
+		// Set the game phase
+		gamePhase = PRE_FLOP;
+		
 		resetMoves();
 		// Update current pot
 		maxStake = getMaxStake();
-		
+				
 		currentPot = smallBlind + bigBlind;
 		
 		getMovs(2);
 		
 		//Flopp
 		System.out.println("FLOPP");
+		gamePhase = FLOP;
+		cardsOnTable.add(deck.drawCard());
+		cardsOnTable.add(deck.drawCard());
+		cardsOnTable.add(deck.drawCard());
 		resetMoves();
 		getMovs(0);
+		
 		//Turn
 		System.out.println("TURN");
+		gamePhase = TURN;
+		cardsOnTable.add(deck.drawCard());
 		resetMoves();
 		getMovs(0);
+		
 		//River
 		System.out.println("RIVER");
+		gamePhase = RIVER;
+		cardsOnTable.add(deck.drawCard());
 		resetMoves();
 		getMovs(0);
 	}

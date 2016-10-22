@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Player {
 
-	public boolean isMakeingAMove = false;
 	int cash;
 	boolean folded = false;
 	boolean isAllIn = false;
@@ -43,7 +42,7 @@ public class Player {
 		URL test = getClass().getResource(fileName);
 		File dataFile = new File(test.getFile().replace("%20", " "));
 		
-		AIBrain brain = new AIBrain(dataFile);
+		brain = new AIBrain(dataFile);
 		
 	}
 
@@ -65,18 +64,22 @@ public class Player {
 	}
 
 	public void makeMove() {
-		isMakeingAMove = true;
-		int toBet = game.maxStake - currentPot;
-		optionFrame oFrame = new optionFrame(this, playerIndex, cash, toBet, card1, card2);
-		oFrame.setVisible(true);
-		
-		synchronized(oFrame){
-            try{
-            	oFrame.wait();
-            }catch(InterruptedException e){
-                e.printStackTrace();
-            } 
-        }
+		if( isAI ){
+			brain.makeMove(this, game);
+		}
+		else{
+			int toBet = game.maxStake - currentPot;
+			optionFrame oFrame = new optionFrame(this, playerIndex, cash, toBet, card1, card2);
+			oFrame.setVisible(true);
+			
+			synchronized(oFrame){
+	            try{
+	            	oFrame.wait();
+	            }catch(InterruptedException e){
+	                e.printStackTrace();
+	            } 
+	        }
+		}
 	}
 
 }
